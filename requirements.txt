@@ -1,0 +1,8 @@
+wheel
+pyqt5
+pillow
+matplotlib
+pandas
+opencv-python
+matplotlib
+scikit-learn

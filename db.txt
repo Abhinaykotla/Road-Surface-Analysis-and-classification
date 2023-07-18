@@ -1,0 +1,16 @@
+.open rsurface1
+
+
+CREATE TABLE rftr
+(
+id varchar(10),
+location varchar(20),
+s1 varchar(6),s2 varchar(6),s3 varchar(6),s4 varchar(6),s5 varchar(6)
+);
+
+CREATE TABLE mfactors
+(
+id varchar(10),
+location varchar(20),
+s1 varchar(6),s2 varchar(6),s3 varchar(6),s4 varchar(6),s5 varchar(6),s6 varchar(6)
+);
