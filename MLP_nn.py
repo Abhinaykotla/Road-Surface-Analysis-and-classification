@@ -6,8 +6,10 @@ from sklearn.metrics import accuracy_score
 from tensorflow.keras.models import Sequential, load_model # type: ignore
 from tensorflow.keras.layers import Dense # type: ignore
 from tensorflow.keras.utils import to_categorical # type: ignore
+import os
 
 def train_nn():
+    output = ""
     try:
         # Load dataset
         df = pd.read_csv('datasets/rmdataset.csv')
@@ -51,19 +53,23 @@ def train_nn():
 
         # Evaluate the model
         loss, accuracy = model.evaluate(X_test, y_test)
-        print(f"Model accuracy on test data: {accuracy * 100:.2f}%")
+        output += f"Model accuracy on test data: {accuracy * 100:.2f}%\n"
+
+        # Ensure the directory exists
+        os.makedirs('models/nn', exist_ok=True)
 
         # Save the model and scaler
         model.save('models/nn/mlp_model.h5')
         np.save('models/nn/scaler.npy', scaler.mean_)
         np.save('models/nn/scaler_scale.npy', scaler.scale_)
-        print("Model and scaler saved")
+        output += "Model and scaler saved\n"
 
-        return model, scaler
+        return output
     except Exception as e:
         return f"An error occurred during training: {e}"
 
 def test_nn(test_sets):
+    output = ""
     try:
         # Load the saved model and scaler
         model = load_model('models/nn/mlp_model.h5')
@@ -82,8 +88,8 @@ def test_nn(test_sets):
         # Make predictions
         predictions = model.predict(test_sets)
         predicted_classes = np.argmax(predictions, axis=1)
-        print(f'MLP predictions on the test sets: {predicted_classes}')
-        return predicted_classes
+        output += f'MLP predictions on the test sets: {predicted_classes}\n'
+        return output
     except Exception as e:
         return f"An error occurred during prediction: {e}"
 
