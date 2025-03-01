@@ -8,6 +8,7 @@ import joblib
 import os
 
 def train_gnb_model():
+    output = ""
     try:
         # Load dataset
         df = pd.read_csv('datasets/rmdataset.csv')
@@ -39,13 +40,13 @@ def train_gnb_model():
 
         # Evaluate the model using cross-validation
         cv_scores = cross_val_score(classifier, X_train, y_train, cv=5)
-        print(f"Cross-validation accuracy scores: {cv_scores}")
-        print(f"Mean cross-validation accuracy: {cv_scores.mean()}")
+        output += f"Cross-validation accuracy scores: {cv_scores}\n"
+        output += f"Mean cross-validation accuracy: {cv_scores.mean()}\n"
 
         # Make predictions and evaluate the model on the test set
         predictions = classifier.predict(X_test)
         accuracy = 100.0 * accuracy_score(y_test, predictions)
-        print("The accuracy of GNB Classifier on testing data is: " + str(accuracy))
+        output += f"The accuracy of GNB Classifier on testing data is: {accuracy}\n"
 
         # Ensure the directory exists
         os.makedirs('models/gnb', exist_ok=True)
@@ -54,13 +55,14 @@ def train_gnb_model():
         joblib.dump(classifier, 'models/gnb/gnb_model.pkl')
         np.save('models/gnb/gnb_scaler.npy', scaler.mean_)
         np.save('models/gnb/gnb_scaler_scale.npy', scaler.scale_)
-        print("Model and scaler saved")
+        output += "Model and scaler saved\n"
 
-        return classifier, scaler, features
+        return output
     except Exception as e:
         return f"An error occurred during training: {e}"
 
 def test_gnb_model(test_sets):
+    output = ""
     try:
         # Load the saved model and scaler
         classifier = joblib.load('models/gnb/gnb_model.pkl')
@@ -78,8 +80,8 @@ def test_gnb_model(test_sets):
 
         # Make predictions
         predictions = classifier.predict(test_sets)
-        print(f'GNB predictions on the test sets: {predictions}')
-        return predictions
+        output += f'GNB predictions on the test sets: {predictions}\n'
+        return output
     except Exception as e:
         return f"An error occurred during prediction: {e}"
 
@@ -88,7 +90,7 @@ if __name__ == "__main__":
     if isinstance(result, str):
         print(result)
     else:
-        classifier, scaler, features = result
+        print(result)
 
         # Example test sets
         test_sets = [
@@ -101,4 +103,4 @@ if __name__ == "__main__":
         if isinstance(result, str):
             print(result)
         else:
-            print(f"Predicted classes: {result}")
+            print(result)
