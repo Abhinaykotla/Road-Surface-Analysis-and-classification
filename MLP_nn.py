@@ -55,8 +55,8 @@ def train_nn():
 
         # Save the model and scaler
         model.save('models/mlp_model.h5')
-        np.save('models/scaler.npy', scaler.mean_)
-        np.save('models/scaler_scale.npy', scaler.scale_)
+        np.save('models/nn_scaler.npy', scaler.mean_)
+        np.save('models/nn_scaler_scale.npy', scaler.scale_)
         print("Model and scaler saved")
 
         return model, scaler
@@ -68,8 +68,8 @@ def test_nn(test_sets):
         # Load the saved model and scaler
         model = load_model('models/mlp_model.h5')
         scaler = StandardScaler()
-        scaler.mean_ = np.load('models/scaler.npy')
-        scaler.scale_ = np.load('models/scaler_scale.npy')
+        scaler.mean_ = np.load('models/nn_scaler.npy')
+        scaler.scale_ = np.load('models/nn_scaler_scale.npy')
     except FileNotFoundError:
         return "Model or scaler file not found"
     except Exception as e:
@@ -104,3 +104,5 @@ if __name__ == "__main__":
         result = test_nn(test_sets)
         if isinstance(result, str):
             print(result)
+        else:
+            print(f"Predicted classes: {result}")
