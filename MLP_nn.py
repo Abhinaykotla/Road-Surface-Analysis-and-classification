@@ -54,9 +54,9 @@ def train_nn():
         print(f"Model accuracy on test data: {accuracy * 100:.2f}%")
 
         # Save the model and scaler
-        model.save('models/mlp_model.h5')
-        np.save('models/nn_scaler.npy', scaler.mean_)
-        np.save('models/nn_scaler_scale.npy', scaler.scale_)
+        model.save('models/nn/mlp_model.h5')
+        np.save('models/nn/scaler.npy', scaler.mean_)
+        np.save('models/nn/scaler_scale.npy', scaler.scale_)
         print("Model and scaler saved")
 
         return model, scaler
@@ -66,10 +66,10 @@ def train_nn():
 def test_nn(test_sets):
     try:
         # Load the saved model and scaler
-        model = load_model('models/mlp_model.h5')
+        model = load_model('models/nn/mlp_model.h5')
         scaler = StandardScaler()
-        scaler.mean_ = np.load('models/nn_scaler.npy')
-        scaler.scale_ = np.load('models/nn_scaler_scale.npy')
+        scaler.mean_ = np.load('models/nn/scaler.npy')
+        scaler.scale_ = np.load('models/nn/scaler_scale.npy')
     except FileNotFoundError:
         return "Model or scaler file not found"
     except Exception as e:
