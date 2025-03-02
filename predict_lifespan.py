@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 def load_and_prepare_model():
 
     # Load the saved model
-    model = load_model('models/mlp_model.h5')
+    model = load_model('models/nn/mlp_model.h5')
 
     # Define the features used in the model
     features = ["IDMachines", "PeopleAtwork", "StreetLights", "Accidents", "DamagedMovers", "StRoadLength", "RoadCurvature", "HPBends", "RoadType", "RoadWidth", "AvgSpeed", "AgeOfRoad"]
@@ -17,7 +17,7 @@ def load_and_prepare_model():
 
     # Fit the scaler on the training data
     # Load dataset
-    df = pd.read_csv('rmdataset.csv')
+    df = pd.read_csv('datasets/rmdataset.csv')
 
     # Data preprocessing
     df["RoadSurface"] = df["RoadSurface"].map({'Poor': 0, 'Avg': 1, 'Good': 2})
@@ -64,9 +64,9 @@ def predict_poor_quality_age(inputs):
     
     return -1
 
-# # Test the function
-# if __name__ == "__main__":
-#     # Example usage
-#     inputs = [7, 17, 819, 13, 9, 6165, 19.62, 0, 0, 200, 0.28]
-#     poor_quality_age = predict_poor_quality_age(inputs)
-#     print(f"The road quality turns to 'Poor' at age of: {poor_quality_age - 1} to {poor_quality_age} years")
+# Test the function
+if __name__ == "__main__":
+    # Example usage
+    inputs = [7, 17, 819, 13, 9, 6165, 19.62, 0, 0, 95, 0.28]
+    poor_quality_age = predict_poor_quality_age(inputs)
+    print(f"The road quality turns to 'Poor' at age of: {poor_quality_age - 1} to {poor_quality_age} years")
