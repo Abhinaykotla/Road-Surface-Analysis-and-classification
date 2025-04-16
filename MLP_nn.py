@@ -70,6 +70,7 @@ def train_nn():
 
 def test_nn(test_sets):
     output = ""
+    test_original = test_sets.copy()
     try:
         # Load the saved model and scaler
         model = load_model('models/nn/mlp_model.h5')
@@ -88,7 +89,31 @@ def test_nn(test_sets):
         # Make predictions
         predictions = model.predict(test_sets)
         predicted_classes = np.argmax(predictions, axis=1)
-        output += f'MLP predictions on the test sets: {predicted_classes}\n'
+        output_array = []
+        output += "Test Cases and Predictions:\n"
+        output += "-" * 50 + "\n"
+        
+        features = ["IDMachines", "PeopleAtwork", "StreetLights", "Accidents", 
+                   "DamagedMovers", "StRoadLength", "RoadCurvature", "HPBends", 
+                   "RoadType", "AvgSpeed", "RoadWidth", "AgeOfRoad"]
+        
+        for i in range(len(predicted_classes)):
+            if predicted_classes[i] == 0:
+                prediction = "Poor quality"
+            elif predicted_classes[i] == 1:
+                prediction = "Avg quality"
+            else:
+                prediction = "Good quality"
+            output_array.append(prediction)
+            
+            # Add test case details
+            output += f"\nTest Case {i+1}:\n"
+            for j, feature in enumerate(features):
+                output += f"{feature}: {test_original[i][j]:.2f}\n"
+            output += f"Prediction: {prediction}\n"
+            output += "-" * 50 + "\n"
+            
+        output += f'\nSummary of predictions:\n{output_array}\n'
         return output
     except Exception as e:
         return f"An error occurred during prediction: {e}"
