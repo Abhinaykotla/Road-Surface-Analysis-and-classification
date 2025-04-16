@@ -1,4 +1,4 @@
-IDMachines,PeopleAtwork,StreetLights,Accidents,DamagedMovers,StRoadLength,RoadCurvature,HPBends,RoadType,RoadWidth,AvgSpeed,AgeOfRoad,RoadSurface
+IDMachines,PeopleAtwork,StreetLights,Accidents,DamagedMovers,StRoadLength,RoadCurvature,HPBends,RoadType,AvgSpeed,RoadWidth,AgeOfRoad,RoadSurface
 3,8,530,50,1,1010,222.36,35,2,23,3.06,13,Poor
 3,7,433,47,3,1131,194.7,35,2,33,2.93,11,Poor
 8,18,887,5,7,6867,41.77,2,0,94,0.11,3,Good
